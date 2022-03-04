@@ -13,39 +13,27 @@
             <div class="col-sm-12 align-self-center">
                 @if (Model.lstDatosFacturacionActual.PaginaActual > 1)
                 {
-                    @Html.ActionLink("<<", "Index", new { pagina = 1 },
-                new { @class = "btn btn-sm btn-default" })
-                    <span></span>
-                    @Html.ActionLink("Anterior", "Index", new { pagina = Model.lstDatosFacturacionActual.PaginaActual - 1 },
+                    @Html.ActionLink("<< Anterior", "Anterior", new { pagina = Model.lstDatosFacturacionActual.PaginaActual -1,tipoEntidadTributaria = Model.lstDatosFacturacionActual.TipoEntidadTributaria},
                 new { @class = "btn btn-sm btn-default" })
                 }
                 else
                 {
-                    @Html.ActionLink("<<", "Index", new { pagina = 1 },
-                new { @class = "btn btn-sm btn-default disabled" })
-                    <span></span>
-                    @Html.ActionLink("Anterior", "Index", new { pagina = 1 },
+                    @Html.ActionLink("<< Anterior", "Anterior", new { pagina = 1 ,tipoEntidadTributaria = Model.lstDatosFacturacionActual.TipoEntidadTributaria},
                 new { @class = "btn btn-sm btn-default disabled" })
                 }
                 <span></span>
-                @if (Model.lstDatosFacturacionActual.PaginaActual < Model.lstDatosFacturacionActual.TotalPaginas -1)
+                @if (Model.lstDatosFacturacionActual.PaginaActual < Model.lstDatosFacturacionActual.TotalPaginas)
                 {
-                    @Html.ActionLink("Siguiente", "Index", new { pagina = Model.lstDatosFacturacionActual.PaginaActual + 1 },
-                new { @class = "btn btn-sm btn-default" })
-                    <span></span>
-                    @Html.ActionLink(">>", "Index", new { pagina = Model.lstDatosFacturacionActual.TotalPaginas },
+                    @Html.ActionLink("Siguiente >>", "Siguiente", new { pagina = Model.lstDatosFacturacionActual.PaginaActual + 1,tipoEntidadTributaria = Model.lstDatosFacturacionActual.TipoEntidadTributaria },
                 new { @class = "btn btn-sm btn-default" })
                 }
                 else
                 {
-                    @Html.ActionLink("Siguiente", "Index", new { pagina = Model.lstDatosFacturacionActual.TotalPaginas - 1 },
+                    @Html.ActionLink("Siguiente >>", "Siguiente", new { pagina = Model.lstDatosFacturacionActual.TotalPaginas + 1 ,tipoEntidadTributaria = Model.lstDatosFacturacionActual.TipoEntidadTributaria},
                 new { @class = "btn btn-sm btn-default disabled" })
-                    <span></span>
-                    @Html.ActionLink(">>", "Index", new { pagina = Model.lstDatosFacturacionActual.TotalPaginas },
-                new { @class = "btn btn-sm btn-default disabled" })
-                }                
+                }
             </div>
-           
+
         </div>
     </div>
 </div>
@@ -54,7 +42,7 @@
 <div class="form-group row">
     <label for="inputPassword" class="col-sm-1 col-form-label">Buscar por:</label>
     <div class="col-sm-3">
-        <select class="form-control">
+        <select onchange="BusquedaPor()" asp-for="lstDatosFacturacionActual.TipoEntidadTributaria" class="form-control">
             <option value="-1">-- Seleccione --</option>
             <option value="117">Cliente</option>
             <option value="118">Emisor</option>
@@ -142,4 +130,10 @@
             </tr>
         }
     </tbody>
-</table>  
+</table>
+<script>
+    function BusquedaPor() {
+        d = document.getElementById("lstDatosFacturacionActual_TipoEntidadTributaria").value;
+        document.location.href = '/DatosFacturacionIndex?tipoEntidadTributaria='+d;
+    }
+</script>
